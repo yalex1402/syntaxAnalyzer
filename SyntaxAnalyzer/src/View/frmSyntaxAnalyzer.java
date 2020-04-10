@@ -1,6 +1,7 @@
 package View;
 import Controller.LexerController;
 import Controller.CheckDataController;
+import Model.SintaxHelper;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +15,7 @@ public class frmSyntaxAnalyzer extends javax.swing.JFrame {
 
     public frmSyntaxAnalyzer() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -84,6 +86,11 @@ public class frmSyntaxAnalyzer extends javax.swing.JFrame {
         });
 
         btnSyntax.setText("Execute Syntax");
+        btnSyntax.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSyntaxActionPerformed(evt);
+            }
+        });
 
         btnClean.setText("Clean Result");
         btnClean.addActionListener(new java.awt.event.ActionListener() {
@@ -177,6 +184,17 @@ public class frmSyntaxAnalyzer extends javax.swing.JFrame {
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
         txtResult.setText("");
     }//GEN-LAST:event_btnCleanActionPerformed
+
+    private void btnSyntaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSyntaxActionPerformed
+        
+        SintaxHelper sintax = new SintaxHelper();
+        txtResult.setText(sintax.getAnalisis(txtCode.getText()));
+        if (sintax.getResult()){
+            txtResult.setForeground(new Color(25, 111, 61));
+        }else{
+            txtResult.setForeground(Color.red);
+        }
+    }//GEN-LAST:event_btnSyntaxActionPerformed
 
     public static void main(String args[]) {
         
