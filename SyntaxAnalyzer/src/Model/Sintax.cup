@@ -1,0 +1,82 @@
+package Model;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal  Quotes, dataType, stringType, If, Else, Do, While, For,
+    opAssignment, opAdd, opSubstract, opMultiply, opDivide, opBoolean, opRelational,
+    opAttribution, opAutoIncrement, Boolean, leftParen, rightParen,
+    leftBrace, rightBrace,leftBracket, rightBracket, Main, semmiColon, Identifier,
+    Number, ERROR;
+non terminal START, INSTRUCTION, DECLARE, DECLARE_FOR, IF, IF_ELSE,
+    WHILE, DO_WHILE, FOR, INSTRUCTION_BOOLEAN, INSTRUCTION_FOR;
+
+start with START;
+
+START ::= 
+    Main leftParen rightParen leftBrace INSTRUCTION rightBrace
+;
+INSTRUCTION ::= 
+    INSTRUCTION DECLARE |
+    DECLARE |
+    INSTRUCTION IF | 
+    IF |
+    INSTRUCTION IF_ELSE |
+    IF_ELSE |
+    INSTRUCTION WHILE |
+    WHILE |
+    INSTRUCTION DO_WHILE
+    DO_WHILE |
+    INSTRUCTION FOR |
+    FOR
+;
+DECLARE ::= 
+    dataType Identifier semmiColon | 
+    dataType Identifier opAttribution Number semmiColon |
+    dataType Identifier opAssignment Number semmiColon |
+    dataType Identifier opAutoIncrement semmiColon | 
+    dataType opAutoIncrement Identifier semmiColon | 
+    stringType Identifier opAttribution Quotes Quotes semmiColon |
+    stringType Identifier opAssignment Quotes Quotes semmiColon |
+    stringType Identifier opAttribution Quotes Identifier Quotes semmiColon |
+    stringType Identifier opAssignment Quotes Identifier Quotes semmiColon
+;
+IF ::= If leftParen INSTRUCTION_BOOLEAN rightParen leftBrace INSTRUCTION rightBrace
+;
+INSTRUCTION_BOOLEAN ::= 
+    Boolean | 
+    Identifier opRelational Boolean |
+    Identifier opRelational Number |
+    Identifier opRelational Identifier |
+    Identifier opRelational Quotes Quotes |
+    Identifier opRelational Quotes Identifier Quotes
+;
+IF_ELSE ::= If leftParen INSTRUCTION_BOOLEAN rightParen leftBrace INSTRUCTION rightBrace Else leftBrace INSTRUCTION rightBrace
+;
+WHILE ::= While leftParen INSTRUCTION_BOOLEAN rightParen leftBrace INSTRUCTION rightBrace
+;
+DO_WHILE ::= Do leftBrace INSTRUCTION rightBrace While leftParen INSTRUCTION_BOOLEAN rightParen semmiColon
+;
+FOR ::= For leftParen INSTRUCTION_FOR rightParen leftBrace INSTRUCTION rightBrace
+;
+INSTRUCTION_FOR ::=
+    dataType Identifier opAssignment Number semmiColon INSTRUCTION_BOOLEAN semmiColon DECLARE_FOR |
+    Identifier opAssignment Number semmiColon INSTRUCTION_BOOLEAN semmiColon DECLARE_FOR
+;
+DECLARE_FOR ::= 
+    Identifier opAttribution Number |
+    Identifier opAutoIncrement | 
+    opAutoIncrement Identifier
+;
