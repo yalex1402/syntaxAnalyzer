@@ -46,7 +46,7 @@ toIgnore=[ ,\t,\r,\n]+
 
 ( "+" ) {return new Symbol(sym.opAdd, yychar, yyline, yytext());}
 
-( "-" ) {return new Symbol(sym.Substract, yychar, yyline, yytext());}
+( "-" ) {return new Symbol(sym.opSubstract, yychar, yyline, yytext());}
 
 ( "*" ) {return new Symbol(sym.opMultiply, yychar, yyline, yytext());}
 
