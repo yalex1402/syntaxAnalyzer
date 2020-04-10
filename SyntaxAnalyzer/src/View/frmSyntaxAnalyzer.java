@@ -1,6 +1,7 @@
 package View;
 import Controller.LexerController;
 import Controller.CheckDataController;
+import Model.LexerHelper;
 import Model.SintaxHelper;
 import java.awt.Color;
 import java.io.File;
@@ -163,17 +164,15 @@ public class frmSyntaxAnalyzer extends javax.swing.JFrame {
             LexerController lexer = new LexerController();
             CheckDataController validation = new CheckDataController();
             String text = txtCode.getText();
-            String aux = text;
             if (validation.IsEmpty(text)){
                 txtResult.setText("You have to write minimun one sentence");
                 txtResult.setForeground(Color.red);
             }
+            LexerHelper lexer2 = new LexerHelper(text);
             while(true){
-                if (lexer.FindTokens(aux)){
+                if (lexer.FindTokens(lexer2)){
                     txtResult.setText(lexer.getTokens());
                     return;
-                }else{
-                    aux = aux.substring(lexer.getWordLength());
                 }
             }
         } catch (IOException ex) {

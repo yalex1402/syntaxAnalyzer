@@ -31,8 +31,8 @@ public class LexerController {
     }
     
     
-    public boolean FindTokens(String code) throws IOException{
-        LexerHelper lexer = new LexerHelper(code);
+    public boolean FindTokens(LexerHelper lexer) throws IOException{
+        
         CheckDataController validation = new CheckDataController();
         Tokens tokens = lexer.getLexeryylex();
         String word = lexer.getLexeme();
