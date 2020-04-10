@@ -28,11 +28,11 @@ public class SintaxHelper {
         String text;
         try {
             s.parse();
-            text = "Analisis realizado correctamente";
+            text = "Analisis completed successfully";
             _result = true;
         } catch (Exception ex) {
             Symbol sym = s.getS();
-            text = "Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"";
+            text = "Syntax Error. Line: " + (sym.right + 1) + " Column: " + (sym.left + 1) + ", Text: \"" + sym.value + "\"";
         }
         return text;
     }
